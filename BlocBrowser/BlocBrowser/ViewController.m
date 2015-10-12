@@ -80,11 +80,17 @@
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat browserHeight = CGRectGetHeight(self.view.bounds) - itemHeight;
     
+    // toolbar dimensions
+    CGFloat toolbarWidth = CGRectGetWidth(self.view.bounds) * .75;
+    CGFloat toolbarHeight = 60;
+    CGFloat toolbarX = (CGRectGetWidth(self.view.bounds) * .25) / 2;
+    CGFloat toolbarY = CGRectGetHeight(self.view.bounds) - (toolbarHeight +10);
+    
     //Now assign the frames.
     self.textField.frame = CGRectMake(0, 0, width, itemHeight);
     self.webView.frame = CGRectMake(0, CGRectGetMaxY(self.textField.frame), width, browserHeight);
     
-    self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
+    self.awesomeToolbar.frame = CGRectMake(toolbarX, toolbarY, toolbarWidth, toolbarHeight);
     
 }
 
@@ -205,13 +211,13 @@
 
 -(void) floatingToolbar:(AwesomeFloatingToolbar *)toolBar didSelectButtonWithTitle:(NSString *)title
 {
-    if ([title isEqual:NSLocalizedString(@"Back", @"Back command")]){
+    if ([title isEqual:kWebBrowserBackString]){
         [self.webView goBack];
-    } else if ([title isEqual:NSLocalizedString(@"Forward", @"Forward command")]){
+    } else if ([title isEqual:kWebBrowserForwardString]){
         [self.webView goForward];
-    } else if ([title isEqual:NSLocalizedString(@"Stop", @"Stop command")]){
+    } else if ([title isEqual:kWebBrowserStopString]){
         [self.webView stopLoading];
-    } else if ([title isEqual:NSLocalizedString(@"Refresh", @"Reload command")]){
+    } else if ([title isEqual:kWebBrowserRefreshString]){
         [self.webView reload];
     }
 }
