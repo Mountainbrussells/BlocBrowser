@@ -23,6 +23,17 @@
     [self.window makeKeyAndVisible];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     
+    // Putting welcome here as it will only apear when app is actually launching
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Welcome", nil)
+                                                                   message:@"You have launched the most awesome browser ever"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                       style:UIAlertActionStyleCancel
+                                                     handler:nil];
+    [alert addAction:okAction];
+    
+    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
     return YES;
 }
 

@@ -83,6 +83,8 @@
     self.actiityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.actiityIndicator];
     
+    
+    
 
 }
 
