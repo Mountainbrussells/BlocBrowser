@@ -118,15 +118,38 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
+    
+    
     [textField resignFirstResponder];
     
     NSString *URLString = textField.text;
     
-    NSURL *URL = [NSURL URLWithString:URLString];
+    if ([URLString containsString:@" "]) {
+        
+        NSString *searchString = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        NSString *googleString = [NSString stringWithFormat:@"google.com/search?q=%@", searchString];
+        
+        [self sendURLRequest:googleString];
+        
+    } else {
+        
+        [self sendURLRequest:URLString];
+        
+    }
+
+    
+    return NO;
+    
+}
+
+- (void)sendURLRequest:(NSString *)urlString {
+    
+    NSURL *URL = [NSURL URLWithString:urlString];
     
     if (!URL.scheme){
         
-        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URLString]];
+        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlString]];
         
     }
     
@@ -135,11 +158,6 @@
         [self.webView loadRequest:request];
     }
     
-    
-    
-
-    
-    return NO;
     
 }
 
