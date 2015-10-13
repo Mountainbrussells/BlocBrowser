@@ -16,6 +16,9 @@
 @property (nonatomic, weak) UILabel *currentlabel;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
+@property (nonatomic, assign) NSInteger colorIndex;
 
 
 @end
@@ -62,6 +65,8 @@
         
         self.labels = labelsArray;
         
+        self.colorIndex = 1;
+        
         for (UILabel *thisLabel in self.labels) {
             [self addSubview:thisLabel];
         }
@@ -72,6 +77,13 @@
         
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
         [self addGestureRecognizer:self.panGesture];
+        
+        self.pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchFired:)];
+        [self addGestureRecognizer:self.pinchGesture];
+        
+        self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
+        self.longPressGesture.minimumPressDuration = 0.5;
+        [self addGestureRecognizer:self.longPressGesture];
     }
     
     return self;
@@ -159,6 +171,52 @@
         
         [recognizer setTranslation:CGPointZero inView:self];
     }
+}
+-(void) pinchFired:(UIPinchGestureRecognizer *)recognizer
+{
+    
+    CGFloat scale = [recognizer scale];
+    
+    if (recognizer.state == UIGestureRecognizerStateChanged) {
+        if ([self.delegate respondsToSelector:@selector(floatingToolbar:didTryToScale:)])
+        {
+            [self.delegate floatingToolbar:self didTryToScale:scale];
+            
+        }
+        
+        recognizer.scale = 1;
+    }
+}
+
+-(void) longPressFired:(UILongPressGestureRecognizer *)recognizer
+{
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Long Press Began");
+        [self changeLabelColors:self.colorIndex];
+    
+    }
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        NSLog(@"Long Press Ended");
+        self.colorIndex = ((self.colorIndex +1) % 4);
+    }
+    
+    
+   
+    
+    
+}
+
+-(void) changeLabelColors:(NSInteger)i
+{
+    
+    for (UILabel* label in self.labels) {
+        NSInteger currentColorIndex = (([self.labels indexOfObject:label] + i) % 4);
+        label.backgroundColor = self.colors[currentColorIndex];
+    }
+    
+    
 }
 
 

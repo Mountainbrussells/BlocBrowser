@@ -67,12 +67,13 @@
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-    
+    self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
+
 
 }
 
 - (void) viewWillLayoutSubviews {
-    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     [super viewWillLayoutSubviews];
     
     // First calculate some dimensions.
@@ -84,7 +85,7 @@
     self.textField.frame = CGRectMake(0, 0, width, itemHeight);
     self.webView.frame = CGRectMake(0, CGRectGetMaxY(self.textField.frame), width, browserHeight);
     
-    self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
+    // self.awesomeToolbar.frame = CGRectMake(20, 100, 280, 60);
     
 }
 
@@ -226,6 +227,13 @@
     if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
         toolBar.frame = potentialNewFrame;
     }
+}
+
+-(void) floatingToolbar:(AwesomeFloatingToolbar *)toolBar didTryToScale:(CGFloat)scale
+{
+    
+    CGAffineTransform transform = CGAffineTransformScale([toolBar transform], scale, scale);
+    toolBar.transform = transform;
 }
 
 
