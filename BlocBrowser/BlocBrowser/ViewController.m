@@ -125,10 +125,28 @@
     
     BlocURL *bloc = [[BlocURL  alloc] initWithString:self.textField.text];
     NSString *url = [bloc URLString];
-    [bloc sendURLRequest:url forView:self.webView];
+    [self sendURLRequest:url];
 
     
     return NO;
+    
+}
+
+- (void)sendURLRequest:(NSString *)urlString {
+    
+        NSURL *URL = [NSURL URLWithString:urlString];
+    
+       if (!URL.scheme){
+        
+               URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlString]];
+        
+          }
+    
+       if (URL) {
+               NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+               [self.webView loadRequest:request];
+            }
+    
     
 }
 

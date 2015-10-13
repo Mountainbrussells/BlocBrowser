@@ -17,6 +17,6 @@
 
 - (instancetype) initWithString:(NSString *)string;
 - (NSString *) URLString;
-- (void)sendURLRequest:(NSString *)urlName forView:(WKWebView *)webView;
+
 
 @end

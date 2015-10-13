@@ -38,22 +38,6 @@
     }
 }
 
-- (void)sendURLRequest:(NSString *)urlName forView:(WKWebView *)webView {
-    
-    NSURL *URL = [NSURL URLWithString:urlName];
-    
-    if (!URL.scheme){
-        
-        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlName]];
-        
-    }
-    
-    if (URL) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-        [webView loadRequest:request];
-    }
-    
-    
-}
+
 @end
 
