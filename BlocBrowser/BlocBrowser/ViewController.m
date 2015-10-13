@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "BlocURL.h"
 #import <WebKit/WebKit.h>
 
 @interface ViewController () <WKNavigationDelegate, UITextFieldDelegate>
@@ -122,44 +123,16 @@
     
     [textField resignFirstResponder];
     
-    NSString *URLString = textField.text;
-    
-    if ([URLString containsString:@" "]) {
-        
-        NSString *searchString = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        
-        NSString *googleString = [NSString stringWithFormat:@"google.com/search?q=%@", searchString];
-        
-        [self sendURLRequest:googleString];
-        
-    } else {
-        
-        [self sendURLRequest:URLString];
-        
-    }
+    BlocURL *bloc = [[BlocURL  alloc] initWithString:self.textField.text];
+    NSString *url = [bloc URLString];
+    [bloc sendURLRequest:url forView:self.webView];
 
     
     return NO;
     
 }
 
-- (void)sendURLRequest:(NSString *)urlString {
-    
-    NSURL *URL = [NSURL URLWithString:urlString];
-    
-    if (!URL.scheme){
-        
-        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", urlString]];
-        
-    }
-    
-    if (URL) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-        [self.webView loadRequest:request];
-    }
-    
-    
-}
+
 
 #pragma mark - WKnavigationDelegate
 
