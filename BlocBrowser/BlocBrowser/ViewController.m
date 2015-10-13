@@ -204,15 +204,15 @@
 
 #pragma mark - AwesomeFloatingToolbarDelegate
 
--(void) floatingToolbar:(AwesomeFloatingToolbar *)toolBar didSelectButtonWithTitle:(NSString *)title
+-(void) floatingToolbar:(AwesomeFloatingToolbar *)toolBar buttonTapped:(UIButton *)button
 {
-    if ([title isEqual:NSLocalizedString(@"Back", @"Back command")]){
+    if ([button.currentTitle isEqual:NSLocalizedString(@"Back", @"Back command")]){
         [self.webView goBack];
-    } else if ([title isEqual:NSLocalizedString(@"Forward", @"Forward command")]){
+    } else if ([button.currentTitle isEqual:NSLocalizedString(@"Forward", @"Forward command")]){
         [self.webView goForward];
-    } else if ([title isEqual:NSLocalizedString(@"Stop", @"Stop command")]){
+    } else if ([button.currentTitle isEqual:NSLocalizedString(@"Stop", @"Stop command")]){
         [self.webView stopLoading];
-    } else if ([title isEqual:NSLocalizedString(@"Refresh", @"Reload command")]){
+    } else if ([button.currentTitle isEqual:NSLocalizedString(@"Refresh", @"Reload command")]){
         [self.webView reload];
     }
 }
